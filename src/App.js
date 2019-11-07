@@ -1,14 +1,18 @@
-import React, { useRef } from "react";
-import { Input, MessageList, Button } from "react-chat-elements";
-
-import "./App.css";
+import React, { useState } from "react";
+import { Button, Input, MessageList } from "react-chat-elements";
 import "react-chat-elements/dist/main.css";
+import "./App.css";
+
 
 function App() {
-  const refContainer = useRef("");
+  const [message, setMessage] = useState("");
 
-  const sendMessage = () => {
-    console.log(refContainer.current.state.value);
+  const processMessage = message => {
+    console.log('<<<<>>>>', message)
+  };
+
+  const handleSend = () => {
+    processMessage(message);
   };
 
   return (
@@ -44,15 +48,20 @@ function App() {
         <Input
           placeholder="Type here..."
           multiline={true}
-          ref={refContainer}
           rightButtons={
             <Button
               color="white"
               backgroundColor="black"
               text="Send"
-              onClick={sendMessage}
+              onClick={handleSend}
             />
           }
+          onKeyPress={e => {
+            if (e.key === "Enter") {
+              processMessage(e.target.value);
+            }
+          }}
+          onChange={(e) => setMessage(e.target.value)}
           inputStyle={{
             border: "2px solid #dedede",
             backgroundColor: "#f1f1f1",
