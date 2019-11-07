@@ -1,14 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Button, Input, MessageList } from "react-chat-elements";
+import { sendChatMessage, initChat } from "./chat-api";
+
 import "react-chat-elements/dist/main.css";
 import "./App.css";
 
-
 function App() {
+  initChat();
+  const inputRef = useRef("");
   const [message, setMessage] = useState("");
 
   const processMessage = message => {
-    console.log('<<<<>>>>', message)
+    console.log(">>>>", message);
+    if (message === "") return;
+  
+    sendChatMessage(message).then(msg => {
+      console.log("sent message: ", msg);
+      setMessage(""); // Clear text input
+      inputRef.current.clear();
+    });
   };
 
   const handleSend = () => {
@@ -47,7 +57,8 @@ function App() {
         />
         <Input
           placeholder="Type here..."
-          multiline={true}
+          ref={inputRef}
+          multiline={false}
           rightButtons={
             <Button
               color="white"
@@ -61,7 +72,7 @@ function App() {
               processMessage(e.target.value);
             }
           }}
-          onChange={(e) => setMessage(e.target.value)}
+          onChange={e => setMessage(e.target.value)}
           inputStyle={{
             border: "2px solid #dedede",
             backgroundColor: "#f1f1f1",
