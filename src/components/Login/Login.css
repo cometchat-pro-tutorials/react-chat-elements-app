@@ -1,0 +1,10 @@
+.welcome-screen {
+  height: calc(100vh - 107px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.welcome-screen form {
+  text-align: center;
+}
