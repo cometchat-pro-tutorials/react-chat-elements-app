@@ -28,7 +28,6 @@ function ChatArea({callback}) {
   return (
     <div className="App">
       <div className="App-container">
-        <button onClick={callback}>LOGOUT</button>
         <MessageList
           className="message-list"
           lockable={true}
@@ -82,6 +81,7 @@ function ChatArea({callback}) {
             margin: "10px 0"
           }}
         />
+        <Button onClick={callback} title="LOGOUT" text="LOGOUT" />
       </div>
     </div>
   );

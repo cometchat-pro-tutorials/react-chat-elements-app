@@ -19,8 +19,9 @@ function App() {
       loginChat(username).then(data => {
         storeToLocalStorage("username", username);
         setHasName(data.uid === username);
-      })
-    );
+      }).catch(err => {
+        console.error("No connection to the Chat API", err);
+      }));
   };
 
   const handleLogout = () => {
