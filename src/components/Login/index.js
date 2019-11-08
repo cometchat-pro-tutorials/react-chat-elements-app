@@ -7,7 +7,8 @@ const Login = ({ callback }) => {
     const [username, setUsername] = useState('');
     const [hasError, setHasError] = useState(false);
 
-    const handleClick = () => {
+    const handleClick = (e) => {
+        e.preventDefault();
         if ((username === 'superhero1' || username === 'superhero2' || username === 'superhero3' || username === 'superhero4' || username === 'superhero5')) {
             setHasError(false);
 
