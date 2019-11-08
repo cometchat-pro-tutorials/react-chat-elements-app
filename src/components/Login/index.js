@@ -20,7 +20,7 @@ const Login = ({ callback }) => {
 
     return (
         <>
-            <div className="welcome-screen">
+            <div className="login-screen">
                 <form onSubmit={handleClick}>
                     <div className="form-group">
                         <div>
@@ -31,7 +31,7 @@ const Login = ({ callback }) => {
                         </div>
                         <input
                             name="username"
-                            id="outlined-name"
+                            className="login-input"
                             label="Name"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
@@ -41,7 +41,7 @@ const Login = ({ callback }) => {
                         />
                     </div>
                     <div>
-                        <button onClick={handleClick}>Enter Chat</button>
+                        <button className="login-btn" onClick={handleClick}>Enter Chat</button>
                     </div>
                 </form>
             </div>

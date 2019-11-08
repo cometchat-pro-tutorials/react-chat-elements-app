@@ -1,10 +1,32 @@
-.welcome-screen {
+.login-screen {
   height: calc(100vh - 107px);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.welcome-screen form {
+.login-screen form {
   text-align: center;
+}
+
+.login-btn {
+  margin: 14px;
+  padding: 14px;
+  border: 2px solid lightslategray;
+  background-color: #1e1e1e;
+  cursor: pointer;
+  color: white;
+  border-radius: 14px;
+}
+
+.login-btn:hover {
+  color: whitesmoke;
+  border: 2px solid white;
+  background-color: maroon;
+}
+
+.login-input {
+  line-height: 18px;
+  padding: 14px;
+  border-radius: 14px;
 }
