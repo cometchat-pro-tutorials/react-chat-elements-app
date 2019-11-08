@@ -1,11 +1,10 @@
 import React, { useRef, useState } from "react";
 import { Button, Input, MessageList } from "react-chat-elements";
-import { initChat, sendChatMessage } from "../../chat-api";
+import { sendChatMessage } from "../../chat-api";
 
 import "react-chat-elements/dist/main.css";
 
 function ChatArea() {
-  initChat();
   const inputRef = useRef("");
   const [message, setMessage] = useState("");
 

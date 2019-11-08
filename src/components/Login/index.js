@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-
-import { storeToLocalStorage } from "../../utils/localStorageService";
 import "./Login.css";
+
 
 const Login = ({ callback }) => {
     const [username, setUsername] = useState('');
@@ -11,9 +10,7 @@ const Login = ({ callback }) => {
         e.preventDefault();
         if ((username === 'superhero1' || username === 'superhero2' || username === 'superhero3' || username === 'superhero4' || username === 'superhero5')) {
             setHasError(false);
-
-            storeToLocalStorage('username', username);
-            callback();
+            callback(username);
         } else {
             setHasError(true);
         }
