@@ -1,27 +1,43 @@
 import React, { useState } from "react";
-import { initChat, loginChat } from './chat-api';
-import ChatArea from './components/ChatArea';
-import Login from './components/Login';
-import { readRecord, storeToLocalStorage } from "./utils/localStorageService";
+import { initChat, loginChat, logoutChat } from "./chat-api";
+import ChatArea from "./components/ChatArea";
+import Login from "./components/Login";
+import {
+  readRecord,
+  storeToLocalStorage,
+  clearAll
+} from "./utils/localStorageService";
 
 import "react-chat-elements/dist/main.css";
 import "./App.css";
 
 function App() {
-  const [hasName, setHasName] = useState(readRecord('username') !== null);
+  const [hasName, setHasName] = useState(readRecord("username") !== null);
 
-    const handleLogin = (username) => {
-        initChat().then(loginChat(username).then((data) => {
-            storeToLocalStorage('username', username);
-            setHasName(data.uid === username);
-        }));
-    };
-
-    return (
-        <>
-            {hasName ? <ChatArea /> : <Login callback={handleLogin} />}
-        </>
+  const handleLogin = username => {
+    initChat().then(
+      loginChat(username).then(data => {
+        storeToLocalStorage("username", username);
+        setHasName(data.uid === username);
+      })
     );
+  };
+
+  const handleLogout = () => {
+    logoutChat();
+    clearAll();
+    setHasName(false);
+  };
+
+  return (
+    <>
+      {hasName ? (
+        <ChatArea callback={handleLogout} />
+      ) : (
+        <Login callback={handleLogin} />
+      )}
+    </>
+  );
 }
 
 export default App;

@@ -28,3 +28,5 @@ export const storeToLocalStorage = (key, value) => {
       }
   }
 };
+
+export const clearAll = () => localStorage.clear();

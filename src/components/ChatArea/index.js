@@ -4,18 +4,20 @@ import { sendChatMessage } from "../../chat-api";
 
 import "react-chat-elements/dist/main.css";
 
-function ChatArea() {
+function ChatArea({callback}) {
   const inputRef = useRef("");
   const [message, setMessage] = useState("");
 
+  const clearTextInput = () => {
+    setMessage("");
+    inputRef.current.clear();
+  };
+
   const processMessage = message => {
-    console.log(">>>>", message);
     if (message === "") return;
-  
+
     sendChatMessage(message).then(msg => {
-      console.log("sent message: ", msg);
-      setMessage(""); // Clear text input
-      inputRef.current.clear();
+      clearTextInput();
     });
   };
 
@@ -26,6 +28,7 @@ function ChatArea() {
   return (
     <div className="App">
       <div className="App-container">
+        <button onClick={callback}>LOGOUT</button>
         <MessageList
           className="message-list"
           lockable={true}

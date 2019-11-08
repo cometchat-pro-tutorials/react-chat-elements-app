@@ -1,6 +1,6 @@
 import { CometChat } from "@cometchat-pro/chat";
 
-require('dotenv').config();
+require("dotenv").config();
 
 const appID = process.env.REACT_APP_ID;
 const apiKey = process.env.REACT_APP_API_KEY;
@@ -18,7 +18,7 @@ export const initChat = () => {
   );
 };
 
-export const loginChat = (username) => {
+export const loginChat = username => {
   return CometChat.login(username, apiKey).then(
     user => {
       attachReceivedMessageListener();
@@ -26,6 +26,19 @@ export const loginChat = (username) => {
     },
     error => {
       console.log("Login failed with exception:", { error });
+    }
+  );
+};
+
+export const logoutChat = () => {
+  CometChat.logout().then(
+    success => {
+      //Logout completed successfully
+      console.log("Logout completed successfully", success);
+    },
+    error => {
+      //Logout failed with exception
+      console.log("Logout failed with exception:", { error });
     }
   );
 };
@@ -47,10 +60,8 @@ const attachReceivedMessageListener = () => {
         console.log("Custom message received successfully", customMessage);
         // Handle custom message
       }
-
     })
   );
-
 };
 
 export const sendChatMessage = message => {
@@ -59,7 +70,11 @@ export const sendChatMessage = message => {
   // const messageType = CometChat.MESSAGE_TYPE.TEXT;
   const receiverType = CometChat.RECEIVER_TYPE.GROUP;
 
-  const textMessage = new CometChat.TextMessage(receiverID, messageText, receiverType);
+  const textMessage = new CometChat.TextMessage(
+    receiverID,
+    messageText,
+    receiverType
+  );
 
   console.log(textMessage);
 
@@ -72,15 +87,16 @@ export const sendChatMessage = message => {
       console.log("Message sending failed with error:", error);
     }
   );
-
 };
-
 
 export const fetchChatGroupConversations = () => {
   const GUID = "supergroup";
   const limit = 30;
 
-  const messageRequest = new CometChat.MessagesRequestBuilder().setGUID(GUID).setLimit(limit).build();
+  const messageRequest = new CometChat.MessagesRequestBuilder()
+    .setGUID(GUID)
+    .setLimit(limit)
+    .build();
 
   return messageRequest.fetchPrevious().then(
     messages => {
