@@ -67,7 +67,6 @@ const attachReceivedMessageListener = () => {
 export const sendChatMessage = message => {
   const receiverID = "supergroup";
   const messageText = message;
-  // const messageType = CometChat.MESSAGE_TYPE.TEXT;
   const receiverType = CometChat.RECEIVER_TYPE.GROUP;
 
   const textMessage = new CometChat.TextMessage(
@@ -75,8 +74,6 @@ export const sendChatMessage = message => {
     messageText,
     receiverType
   );
-
-  console.log(textMessage);
 
   return CometChat.sendMessage(textMessage).then(
     message => {
