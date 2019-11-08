@@ -15,13 +15,16 @@ function App() {
   const [hasName, setHasName] = useState(readRecord("username") !== null);
 
   const handleLogin = username => {
-    initChat().then(
-      loginChat(username).then(data => {
-        storeToLocalStorage("username", username);
-        setHasName(data.uid === username);
-      }).catch(err => {
-        console.error("No connection to the Chat API", err);
-      }));
+    initChat()
+      .then(
+        loginChat(username)
+          .then(data => {
+            storeToLocalStorage("username", username);
+            setHasName(data.uid === username);
+          })
+          .catch(err => console.error("No connection to the Chat API", err))
+      )
+      .catch(err => console.error("Initialization needed: ", err));
   };
 
   const handleLogout = () => {
