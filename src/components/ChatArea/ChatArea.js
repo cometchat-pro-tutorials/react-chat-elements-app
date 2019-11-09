@@ -12,19 +12,18 @@ function ChatArea({callback}) {
   // Load the messages history when entering the chat screen 
   useEffect(() => {
     fetchChatGroupConversations().then(pastMessages => setMessages(pastMessages));
-}, []);
+    console.log('>>> useffecf', messages);
+}, [messages]);
 
   const clearTextInput = () => {
     setMessage("");
     inputRef.current.clear();
   };
 
-  const processMessage = message => {
-    if (message === "") return;
+  const processMessage = messageToBeSent => {
+    if (messageToBeSent === "") return;
 
-    sendChatMessage(message).then(msg => {
-      console.log('>>> messages: ', messages);
-      console.log('>>> msg: ', msg);
+    sendChatMessage(messageToBeSent).then(msg => {
       setMessages([...messages, ...[msg]]);
       clearTextInput();
     });
