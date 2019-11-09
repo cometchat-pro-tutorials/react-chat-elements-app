@@ -7,11 +7,11 @@ import "react-chat-elements/dist/main.css";
 function ChatArea({callback}) {
   const inputRef = useRef("");
   const [message, setMessage] = useState("");
-  const [groupConversations, setGroupConversations] = useState([]);
+  const [messages, setMessages] = useState([]);
 
+  // Load the messages history when entering the chat screen 
   useEffect(() => {
-    console.log('>>> useEffect');
-    fetchChatGroupConversations().then(conversationsData => setGroupConversations(conversationsData));
+    fetchChatGroupConversations().then(pastMessages => setMessages(pastMessages));
 }, []);
 
   const clearTextInput = () => {
@@ -23,6 +23,9 @@ function ChatArea({callback}) {
     if (message === "") return;
 
     sendChatMessage(message).then(msg => {
+      console.log('>>> messages: ', messages);
+      console.log('>>> msg: ', msg);
+      setMessages([...messages, ...[msg]]);
       clearTextInput();
     });
   };
@@ -33,12 +36,13 @@ function ChatArea({callback}) {
 
   return (
     <div className="App">
+      <Button onClick={callback} title="LOGOUT" text="LOGOUT" />
       <div className="App-container">
         <MessageList
           className="message-list"
           lockable={true}
           toBottomHeight={"100%"}
-          dataSource={groupConversations}
+          dataSource={messages}
         />
         <Input
           placeholder="Type here..."
@@ -66,7 +70,6 @@ function ChatArea({callback}) {
             margin: "10px 0"
           }}
         />
-        <Button onClick={callback} title="LOGOUT" text="LOGOUT" />
       </div>
     </div>
   );
