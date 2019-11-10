@@ -1,19 +1,26 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, Input, MessageList } from "react-chat-elements";
-import { sendChatMessage, fetchChatGroupConversations } from "../../chat-api";
+import { sendChatMessage } from "../../chat-api";
+import PubSub from "pubsub-js";
 
 import "react-chat-elements/dist/main.css";
 
-function ChatArea({callback}) {
+function ChatArea({ logoutCallback, addMessageCallback, messages }) {
   const inputRef = useRef("");
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [updatedMessages, setUpdatedMessages] = useState([]);
 
-  // Load the messages history when entering the chat screen 
+  const mySubscriber = (msg, data) => {
+    if (msg === "CHAT_MSG") {
+      addMessageCallback(updatedMessages, data);
+    }
+  };
+
+  PubSub.subscribe("CHAT_MSG", mySubscriber);
+
   useEffect(() => {
-    fetchChatGroupConversations().then(pastMessages => setMessages(pastMessages));
-    console.log('>>> useffecf', messages);
-}, [messages]);
+    setUpdatedMessages(messages);
+  }, [messages]);
 
   const clearTextInput = () => {
     setMessage("");
@@ -24,7 +31,7 @@ function ChatArea({callback}) {
     if (messageToBeSent === "") return;
 
     sendChatMessage(messageToBeSent).then(msg => {
-      setMessages([...messages, ...[msg]]);
+      addMessageCallback(updatedMessages, msg);
       clearTextInput();
     });
   };
@@ -35,13 +42,13 @@ function ChatArea({callback}) {
 
   return (
     <div className="App">
-      <Button onClick={callback} title="LOGOUT" text="LOGOUT" />
+      <Button onClick={logoutCallback} title="LOGOUT" text="LOGOUT" />
       <div className="App-container">
         <MessageList
           className="message-list"
           lockable={true}
           toBottomHeight={"100%"}
-          dataSource={messages}
+          dataSource={updatedMessages}
         />
         <Input
           placeholder="Type here..."

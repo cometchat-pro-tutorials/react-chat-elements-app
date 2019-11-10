@@ -1,4 +1,5 @@
 import { CometChat } from "@cometchat-pro/chat";
+import PubSub from 'pubsub-js'
 
 require("dotenv").config();
 
@@ -51,6 +52,7 @@ const attachReceivedMessageListener = () => {
     new CometChat.MessageListener({
       onTextMessageReceived: textMessage => {
         console.log("Text message received successfully", textMessage);
+        PubSub.publish('CHAT_MSG', textMessage);
       },
       onMediaMessageReceived: mediaMessage => {
         console.log("Media message received successfully", mediaMessage);
