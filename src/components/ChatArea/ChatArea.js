@@ -62,10 +62,7 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
           multiline={false}
           rightButtons={
             <>
-              <button
-                className="toggle-media-form-btn"
-                onClick={toggleMediaFormVisibility}
-              >
+              <button className="media-btn" onClick={toggleMediaFormVisibility}>
                 <img
                   alt="Send file"
                   src="https://img.icons8.com/metro/26/000000/send-file.png"
@@ -96,15 +93,10 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
       </div>
 
       {isMediaFormVisible && (
-        <form method="post" enctype="multipart/form-data">
-          <div>
-            <label for="file">Choose file to upload</label>
-            <input type="file" id="file" name="file" multiple />
-          </div>
-          <div>
-            <button>Submit</button>
-          </div>
-        </form>
+        <>
+          <input type="file" id="media" name="media" multiple onChange={e => setMessage(document.getElementById('media').files[0])} />
+          <button className="media-btn" onClick={handleSend}>Submit</button>
+        </>
       )}
     </div>
   );

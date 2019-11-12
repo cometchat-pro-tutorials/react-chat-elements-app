@@ -1,5 +1,5 @@
 import { CometChat } from "@cometchat-pro/chat";
-import PubSub from 'pubsub-js'
+import PubSub from "pubsub-js";
 
 require("dotenv").config();
 
@@ -52,7 +52,7 @@ const attachReceivedMessageListener = () => {
     new CometChat.MessageListener({
       onTextMessageReceived: textMessage => {
         console.log("Text message received successfully", textMessage);
-        PubSub.publish('CHAT_MSG', textMessage);
+        PubSub.publish("CHAT_MSG", textMessage);
       },
       onMediaMessageReceived: mediaMessage => {
         console.log("Media message received successfully", mediaMessage);
@@ -66,14 +66,47 @@ const attachReceivedMessageListener = () => {
   );
 };
 
-export const sendChatMessage = message => {
+export const sendChatMessage = messagePayload => {
   const receiverID = "supergroup";
-  const messageText = message;
+
+  if (typeof messagePayload === "object") {
+    // Media message
+    sendMediaMessage(receiverID, messagePayload);
+  } else {
+    // Text message
+    sendTextMessage(receiverID, messagePayload);
+  }
+};
+
+const sendMediaMessage = (receiverID, message) => {
+  const messageType = CometChat.MESSAGE_TYPE.FILE;
+  const receiverType = CometChat.RECEIVER_TYPE.GROUP;
+
+  const mediaMessage = new CometChat.MediaMessage(
+    receiverID,
+    message,
+    messageType,
+    receiverType
+  );
+
+  CometChat.sendMediaMessage(mediaMessage).then(
+    message => {
+      // Message sent successfully.
+      console.log("Media message sent successfully", message);
+    },
+    error => {
+      console.log("Media message sending failed with error", error);
+      // Handle exception.
+    }
+  );
+};
+
+const sendTextMessage = (receiverID, message) => {
   const receiverType = CometChat.RECEIVER_TYPE.GROUP;
 
   const textMessage = new CometChat.TextMessage(
     receiverID,
-    messageText,
+    message,
     receiverType
   );
 

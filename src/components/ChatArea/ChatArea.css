@@ -1,8 +1,8 @@
-.toggle-media-form-btn {
+.media-btn {
   border-radius: 4px;
   cursor: pointer;
 }
 
-.toggle-media-form-btn:hover {
+.media-btn:hover {
   background-color: lightgrey;
 }
