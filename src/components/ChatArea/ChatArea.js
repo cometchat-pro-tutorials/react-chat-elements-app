@@ -3,12 +3,14 @@ import { Button, Input, MessageList } from "react-chat-elements";
 import { sendChatMessage } from "../../chat-api";
 import PubSub from "pubsub-js";
 
+import "./ChatArea.css";
 import "react-chat-elements/dist/main.css";
 
 function ChatArea({ logoutCallback, addMessageCallback, messages }) {
   const inputRef = useRef("");
   const [message, setMessage] = useState("");
   const [updatedMessages, setUpdatedMessages] = useState([]);
+  const [isMediaFormVisible, setIsMediaFormVisible] = useState(false);
 
   const mySubscriber = (msg, data) => {
     if (msg === "CHAT_MSG") {
@@ -40,6 +42,10 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
     processMessage(message);
   };
 
+  const toggleMediaFormVisibility = () => {
+    setIsMediaFormVisible(!isMediaFormVisible);
+  };
+
   return (
     <div className="App">
       <Button onClick={logoutCallback} title="LOGOUT" text="LOGOUT" />
@@ -55,12 +61,23 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
           ref={inputRef}
           multiline={false}
           rightButtons={
-            <Button
-              color="white"
-              backgroundColor="black"
-              text="Send"
-              onClick={handleSend}
-            />
+            <>
+              <button
+                className="toggle-media-form-btn"
+                onClick={toggleMediaFormVisibility}
+              >
+                <img
+                  alt="Send file"
+                  src="https://img.icons8.com/metro/26/000000/send-file.png"
+                />
+              </button>
+              <Button
+                color="white"
+                backgroundColor="black"
+                text="Send"
+                onClick={handleSend}
+              />
+            </>
           }
           onKeyPress={e => {
             if (e.key === "Enter") {
@@ -77,6 +94,18 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
           }}
         />
       </div>
+
+      {isMediaFormVisible && (
+        <form method="post" enctype="multipart/form-data">
+          <div>
+            <label for="file">Choose file to upload</label>
+            <input type="file" id="file" name="file" multiple />
+          </div>
+          <div>
+            <button>Submit</button>
+          </div>
+        </form>
+      )}
     </div>
   );
 }
