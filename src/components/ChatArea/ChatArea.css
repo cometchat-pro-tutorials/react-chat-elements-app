@@ -6,3 +6,7 @@
 .media-btn:hover {
   background-color: lightgrey;
 }
+
+.media-container {
+  margin-bottom: 14px;
+}

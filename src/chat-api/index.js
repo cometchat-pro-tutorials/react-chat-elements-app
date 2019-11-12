@@ -1,5 +1,6 @@
 import { CometChat } from "@cometchat-pro/chat";
 import PubSub from "pubsub-js";
+import { TEXT_MSG, MEDIA_MSG } from './../utils/consts';
 
 require("dotenv").config();
 
@@ -52,13 +53,14 @@ const attachReceivedMessageListener = () => {
     new CometChat.MessageListener({
       onTextMessageReceived: textMessage => {
         console.log("Text message received successfully", textMessage);
-        PubSub.publish("CHAT_MSG", textMessage);
+        PubSub.publish(TEXT_MSG, textMessage);
       },
       onMediaMessageReceived: mediaMessage => {
         console.log("Media message received successfully", mediaMessage);
         // Handle media message
+        PubSub.publish(MEDIA_MSG, mediaMessage);
       },
-      onCutomMessageReceived: customMessage => {
+      onCustomMessageReceived: customMessage => {
         console.log("Custom message received successfully", customMessage);
         // Handle custom message
       }
@@ -71,10 +73,10 @@ export const sendChatMessage = messagePayload => {
 
   if (typeof messagePayload === "object") {
     // Media message
-    sendMediaMessage(receiverID, messagePayload);
+    return sendMediaMessage(receiverID, messagePayload);
   } else {
     // Text message
-    sendTextMessage(receiverID, messagePayload);
+    return sendTextMessage(receiverID, messagePayload);
   }
 };
 
@@ -93,6 +95,7 @@ const sendMediaMessage = (receiverID, message) => {
     message => {
       // Message sent successfully.
       console.log("Media message sent successfully", message);
+      return message
     },
     error => {
       console.log("Media message sending failed with error", error);

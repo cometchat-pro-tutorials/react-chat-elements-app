@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Button, Input, MessageList } from "react-chat-elements";
 import { sendChatMessage } from "../../chat-api";
 import PubSub from "pubsub-js";
+import { TEXT_MSG, MEDIA_MSG } from "../../utils/consts";
 
 import "./ChatArea.css";
 import "react-chat-elements/dist/main.css";
@@ -13,12 +14,13 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
   const [isMediaFormVisible, setIsMediaFormVisible] = useState(false);
 
   const mySubscriber = (msg, data) => {
-    if (msg === "CHAT_MSG") {
+    if (msg === TEXT_MSG || msg === MEDIA_MSG) {
       addMessageCallback(updatedMessages, data);
     }
   };
 
-  PubSub.subscribe("CHAT_MSG", mySubscriber);
+  PubSub.subscribe(TEXT_MSG, mySubscriber);
+  PubSub.subscribe(MEDIA_MSG, mySubscriber);
 
   useEffect(() => {
     setUpdatedMessages(messages);
@@ -93,10 +95,20 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
       </div>
 
       {isMediaFormVisible && (
-        <>
-          <input type="file" id="media" name="media" multiple onChange={e => setMessage(document.getElementById('media').files[0])} />
-          <button className="media-btn" onClick={handleSend}>Submit</button>
-        </>
+        <div className="media-container">
+          <input
+            type="file"
+            id="media"
+            name="media"
+            multiple
+            onChange={e =>
+              setMessage(document.getElementById("media").files[0])
+            }
+          />
+          <button className="media-btn" onClick={handleSend}>
+            Submit
+          </button>
+        </div>
       )}
     </div>
   );
