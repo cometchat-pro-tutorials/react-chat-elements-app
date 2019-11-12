@@ -72,10 +72,8 @@ export const sendChatMessage = messagePayload => {
   const receiverID = "supergroup";
 
   if (typeof messagePayload === "object") {
-    // Media message
     return sendMediaMessage(receiverID, messagePayload);
   } else {
-    // Text message
     return sendTextMessage(receiverID, messagePayload);
   }
 };
@@ -91,7 +89,7 @@ const sendMediaMessage = (receiverID, message) => {
     receiverType
   );
 
-  CometChat.sendMediaMessage(mediaMessage).then(
+  return CometChat.sendMediaMessage(mediaMessage).then(
     message => {
       // Message sent successfully.
       console.log("Media message sent successfully", message);

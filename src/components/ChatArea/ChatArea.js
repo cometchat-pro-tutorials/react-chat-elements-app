@@ -34,6 +34,8 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
   const processMessage = messageToBeSent => {
     if (messageToBeSent === "") return;
 
+    console.log('>>>>>>>>>>>>> mess: ', messageToBeSent);
+    
     sendChatMessage(messageToBeSent).then(msg => {
       addMessageCallback(updatedMessages, msg);
       clearTextInput();
