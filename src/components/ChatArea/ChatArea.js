@@ -32,8 +32,6 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
   };
 
   const processMessage = messageToBeSent => {
-    console.log("messagetobesent: ", messageToBeSent);
-
     if (messageToBeSent === "") return;
 
     sendChatMessage(messageToBeSent).then(msg => {
@@ -55,12 +53,6 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
     <div className="App">
       <Button onClick={logoutCallback} title="LOGOUT" text="LOGOUT" />
       <div className="App-container">
-        {/* <MessageList
-          className="message-list"
-          lockable={true}
-          toBottomHeight={"100%"}
-          dataSource={updatedMessages}
-        /> */}
         {updatedMessages.map((msg, idx) => (
           <MessageBox
             key={idx}
