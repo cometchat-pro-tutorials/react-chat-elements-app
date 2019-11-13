@@ -57,7 +57,7 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
           <MessageBox
             key={idx}
             position={"left"}
-            type={msg.type === 'image' ? 'photo' : msg.type}
+            type={msg.type}
             text={msg.text}
             data={{
               uri: msg.data.url,
