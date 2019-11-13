@@ -79,7 +79,7 @@ export const sendChatMessage = messagePayload => {
 };
 
 const sendMediaMessage = (receiverID, message) => {
-  const messageType = CometChat.MESSAGE_TYPE.FILE;
+  const messageType = message.type.startsWith('image') ? CometChat.MESSAGE_TYPE.IMAGE : CometChat.MESSAGE_TYPE.FILE;
   const receiverType = CometChat.RECEIVER_TYPE.GROUP;
 
   const mediaMessage = new CometChat.MediaMessage(

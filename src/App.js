@@ -35,6 +35,18 @@ function App() {
   };
 
   const handleAddMessage = (groupConversations, msg) => {
+    // Replace all properties 'type:image' with 'type: photo' as per react-chat-elements needs
+    groupConversations = groupConversations.map(msg => {
+      if (msg.type && msg.type === 'image') {
+        msg.type = 'photo';
+      }
+
+      if (msg.data && msg.data.type && msg.data.type === 'image') {
+        msg.data.type = 'photo';
+      }
+
+      return msg;
+    });
     setMessages([...groupConversations, ...[msg]]);
   };
 

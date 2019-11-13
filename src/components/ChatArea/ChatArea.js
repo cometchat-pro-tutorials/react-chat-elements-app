@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Input, MessageList } from "react-chat-elements";
-import { sendChatMessage } from "../../chat-api";
 import PubSub from "pubsub-js";
-import { TEXT_MSG, MEDIA_MSG } from "../../utils/consts";
+import { Button, Input, MessageBox } from "react-chat-elements";
+import { sendChatMessage } from "../../chat-api";
+import { MEDIA_MSG, TEXT_MSG } from "../../utils/consts";
 
-import "./ChatArea.css";
 import "react-chat-elements/dist/main.css";
+import "./ChatArea.css";
 
 function ChatArea({ logoutCallback, addMessageCallback, messages }) {
   const inputRef = useRef("");
@@ -32,12 +32,13 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
   };
 
   const processMessage = messageToBeSent => {
+    console.log("messagetobesent: ", messageToBeSent);
+
     if (messageToBeSent === "") return;
 
-    console.log('>>>>>>>>>>>>> mess: ', messageToBeSent);
-    
     sendChatMessage(messageToBeSent).then(msg => {
       addMessageCallback(updatedMessages, msg);
+
       clearTextInput();
     });
   };
@@ -54,12 +55,27 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
     <div className="App">
       <Button onClick={logoutCallback} title="LOGOUT" text="LOGOUT" />
       <div className="App-container">
-        <MessageList
+        {/* <MessageList
           className="message-list"
           lockable={true}
           toBottomHeight={"100%"}
           dataSource={updatedMessages}
-        />
+        /> */}
+        {updatedMessages.map((msg, idx) => (
+          <MessageBox
+            key={idx}
+            position={"left"}
+            type={msg.type === 'image' ? 'photo' : msg.type}
+            text={msg.text}
+            data={{
+              uri: msg.data.url,
+              status: {
+                click: false,
+                loading: 0
+              }
+            }}
+          />
+        ))}
         <Input
           placeholder="Type here..."
           ref={inputRef}
