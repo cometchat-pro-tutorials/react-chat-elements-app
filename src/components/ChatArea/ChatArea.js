@@ -58,6 +58,7 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
             key={idx}
             position={"left"}
             type={msg.type}
+            onClick={() => window.open(msg.data.url)}
             text={msg.text}
             data={{
               uri: msg.data.url,
