@@ -26,9 +26,12 @@
 }
 
 .login-input {
+  font-size: 18px;
   line-height: 18px;
   padding: 14px;
-  border-radius: 14px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
 }
 
 .error {
