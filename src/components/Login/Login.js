@@ -32,7 +32,7 @@ const Login = ({ callback }) => {
                 usernames, e.g. "superhero1"
               </div>
             )}
-            <label htmlFor="username">Enter your name</label>
+            <label htmlFor="username">Welcome to our <a href="https://github.com/Detaysoft/react-chat-elements" target="_blank" rel="noreferrer noopener">react-chat-elements</a> chat demo powered by CometChat. Login with the username superhero1, superhero2 or superhero3 and test the chat out. To create your own user, see <a href="https://github.com/Detaysoft/react-chat-elements" target="_blank" rel="noreferrer noopener">our documentation.</a></label>
           </div>
           <input
             name="username"

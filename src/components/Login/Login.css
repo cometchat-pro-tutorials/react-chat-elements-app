@@ -34,3 +34,10 @@
 .error {
   color: red;
 }
+
+label {
+  text-align: left;
+  width: 300px;
+  display: block;
+  margin: 14px;
+}
