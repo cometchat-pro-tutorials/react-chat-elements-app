@@ -26,6 +26,7 @@
 }
 
 .login-input {
+  width: 280px;
   font-size: 18px;
   line-height: 18px;
   padding: 14px;
@@ -39,6 +40,8 @@
 }
 
 label {
+  font-size: 13px;
+  color: gray;
   text-align: left;
   width: 300px;
   display: block;
