@@ -11,7 +11,6 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
   const inputRef = useRef("");
   const [message, setMessage] = useState("");
   const [updatedMessages, setUpdatedMessages] = useState([]);
-  const [isMediaFormVisible, setIsMediaFormVisible] = useState(false);
 
   const mySubscriber = (msg, data) => {
     if (msg === TEXT_MSG || msg === MEDIA_MSG) {
@@ -45,17 +44,18 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
     processMessage(message);
   };
 
-  const toggleMediaFormVisibility = () => {
-    setIsMediaFormVisible(!isMediaFormVisible);
-  };
-
   return (
-    <div className="App">
-      <div className="App-container">
-        <div className="App-logout-btn">
-          <Button onClick={logoutCallback} title="LOGOUT" text="X" />
+    <div className="app">
+      <div className="container">
+        <div className="logout-btn">
+          <Button
+            backgroundColor="black"
+            onClick={logoutCallback}
+            title="LOGOUT"
+            text="X"
+          />
         </div>
-        <div className="App-messages-list">
+        <div className="messages-list">
           {updatedMessages.map((msg, idx) => (
             <MessageBox
               key={idx}
@@ -73,26 +73,32 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
             />
           ))}
         </div>
-        <div className="App-send-messages-input">
+        <div className="send-messages-input">
           <Input
             placeholder="Type here..."
             ref={inputRef}
             multiline={false}
             rightButtons={
               <>
-                <button
-                  className="media-btn"
-                  onClick={toggleMediaFormVisibility}
-                >
-                  <img
-                    alt="Send file"
-                    src="https://img.icons8.com/metro/26/000000/send-file.png"
+                <div className="upload-btn-wrapper">
+                  <button className="upload-btn">
+                    <img
+                      alt="Upload file"
+                      src="https://img.icons8.com/metro/26/000000/send-file.png"
+                    />
+                  </button>
+                  <input
+                    type="file"
+                    id="media"
+                    onChange={e =>
+                      setMessage(document.getElementById("media").files[0])
+                    }
                   />
-                </button>
+                </div>
                 <Button
                   color="white"
                   backgroundColor="black"
-                  text="Send"
+                  text="SEND"
                   onClick={handleSend}
                 />
               </>
@@ -113,23 +119,6 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
           />
         </div>
       </div>
-
-      {isMediaFormVisible && (
-        <div className="media-container">
-          <input
-            type="file"
-            id="media"
-            name="media"
-            multiple
-            onChange={e =>
-              setMessage(document.getElementById("media").files[0])
-            }
-          />
-          <button className="media-btn" onClick={handleSend}>
-            Submit
-          </button>
-        </div>
-      )}
     </div>
   );
 }
