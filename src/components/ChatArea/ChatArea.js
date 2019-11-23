@@ -51,58 +51,67 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
 
   return (
     <div className="App">
-      <Button onClick={logoutCallback} title="LOGOUT" text="LOGOUT" />
       <div className="App-container">
-        {updatedMessages.map((msg, idx) => (
-          <MessageBox
-            key={idx}
-            position={"left"}
-            type={msg.type}
-            onClick={() => window.open(msg.data.url)}
-            text={msg.text}
-            data={{
-              uri: msg.data.url,
-              status: {
-                click: false,
-                loading: 0
+        <div className="App-logout-btn">
+          <Button onClick={logoutCallback} title="LOGOUT" text="X" />
+        </div>
+        <div className="App-messages-list">
+          {updatedMessages.map((msg, idx) => (
+            <MessageBox
+              key={idx}
+              position={"left"}
+              type={msg.type}
+              onClick={() => window.open(msg.data.url)}
+              text={msg.text}
+              data={{
+                uri: msg.data.url,
+                status: {
+                  click: false,
+                  loading: 0
+                }
+              }}
+            />
+          ))}
+        </div>
+        <div className="App-send-messages-input">
+          <Input
+            placeholder="Type here..."
+            ref={inputRef}
+            multiline={false}
+            rightButtons={
+              <>
+                <button
+                  className="media-btn"
+                  onClick={toggleMediaFormVisibility}
+                >
+                  <img
+                    alt="Send file"
+                    src="https://img.icons8.com/metro/26/000000/send-file.png"
+                  />
+                </button>
+                <Button
+                  color="white"
+                  backgroundColor="black"
+                  text="Send"
+                  onClick={handleSend}
+                />
+              </>
+            }
+            onKeyPress={e => {
+              if (e.key === "Enter") {
+                processMessage(e.target.value);
               }
             }}
+            onChange={e => setMessage(e.target.value)}
+            inputStyle={{
+              border: "2px solid #dedede",
+              backgroundColor: "#f1f1f1",
+              borderRadius: "5px",
+              padding: "10px",
+              margin: "10px 0"
+            }}
           />
-        ))}
-        <Input
-          placeholder="Type here..."
-          ref={inputRef}
-          multiline={false}
-          rightButtons={
-            <>
-              <button className="media-btn" onClick={toggleMediaFormVisibility}>
-                <img
-                  alt="Send file"
-                  src="https://img.icons8.com/metro/26/000000/send-file.png"
-                />
-              </button>
-              <Button
-                color="white"
-                backgroundColor="black"
-                text="Send"
-                onClick={handleSend}
-              />
-            </>
-          }
-          onKeyPress={e => {
-            if (e.key === "Enter") {
-              processMessage(e.target.value);
-            }
-          }}
-          onChange={e => setMessage(e.target.value)}
-          inputStyle={{
-            border: "2px solid #dedede",
-            backgroundColor: "#f1f1f1",
-            borderRadius: "5px",
-            padding: "10px",
-            margin: "10px 0"
-          }}
-        />
+        </div>
       </div>
 
       {isMediaFormVisible && (

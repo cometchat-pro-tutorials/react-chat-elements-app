@@ -1,8 +1,37 @@
 .App {
   text-align: center;
+  max-width: 800px;
 }
 
 .App-container {
-  max-width: 600px;
   margin: 0 auto;
+}
+
+.App-logout-btn {
+  float: right;
+  margin: 4px;
+}
+
+.App-messages-list {
+  height: 480px;
+  width: 100%;
+  overflow: auto;
+}
+
+.App-messages-list::-webkit-scrollbar {
+  width: 14px;
+}
+
+.App-messages-list::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.App-messages-list::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
+.App-send-messages-input {
+  position: sticky;
+  bottom: 0;
 }
