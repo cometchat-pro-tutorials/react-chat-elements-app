@@ -85,7 +85,7 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
                     type="file"
                     id="media"
                     onChange={e =>
-                      setMessage(document.getElementById("media").files[0])
+                      processMessage(document.getElementById("media").files[0])
                     }
                   />
                   <button className="upload-btn">
