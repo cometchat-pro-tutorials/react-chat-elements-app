@@ -46,16 +46,19 @@
   border: 2px solid gray;
   color: gray;
   background-color: white;
-  padding: 3px 20px;
+  padding: 4px 20px;
   border-radius: 8px;
   font-size: 20px;
   font-weight: bold;
 }
 
-.upload-btn-wrapper input[type=file] {
+.upload-btn-wrapper input[type="file"] {
   font-size: 100px;
   position: absolute;
   left: 0;
   top: 0;
   opacity: 0;
+  display: block;
+  padding: 29px 0 0 0;
+  cursor: pointer;
 }

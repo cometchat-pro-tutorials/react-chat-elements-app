@@ -81,12 +81,6 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
             rightButtons={
               <>
                 <div className="upload-btn-wrapper">
-                  <button className="upload-btn">
-                    <img
-                      alt="Upload file"
-                      src="https://img.icons8.com/metro/26/000000/send-file.png"
-                    />
-                  </button>
                   <input
                     type="file"
                     id="media"
@@ -94,6 +88,12 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
                       setMessage(document.getElementById("media").files[0])
                     }
                   />
+                  <button className="upload-btn">
+                    <img
+                      alt="Upload file"
+                      src="https://img.icons8.com/metro/26/000000/send-file.png"
+                    />
+                  </button>
                 </div>
                 <Button
                   color="white"
