@@ -10,3 +10,7 @@
 .media-container {
   margin-bottom: 14px;
 }
+
+.message {
+  display: flex;
+}

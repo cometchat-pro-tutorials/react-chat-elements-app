@@ -6,6 +6,7 @@ import { MEDIA_MSG, TEXT_MSG } from "../../utils/consts";
 
 import "react-chat-elements/dist/main.css";
 import "./ChatArea.css";
+import User from "../User/User";
 
 function ChatArea({ logoutCallback, addMessageCallback, messages }) {
   const inputRef = useRef("");
@@ -57,8 +58,8 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
         </div>
         <div className="messages-list">
           {updatedMessages.map((msg, idx) => (
-            <>
-              <div>{msg.sender.name}</div>
+            <div className="message" key={msg.id}>
+              <User userData={msg.sender} />
               <MessageBox
                 key={idx}
                 position={"left"}
@@ -73,7 +74,7 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
                   }
                 }}
               />
-            </>
+            </div>
           ))}
         </div>
         <div className="send-messages-input">
