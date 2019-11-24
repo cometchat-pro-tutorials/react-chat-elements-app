@@ -57,20 +57,23 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
         </div>
         <div className="messages-list">
           {updatedMessages.map((msg, idx) => (
-            <MessageBox
-              key={idx}
-              position={"left"}
-              type={msg.type}
-              onClick={() => window.open(msg.data.url)}
-              text={msg.text}
-              data={{
-                uri: msg.data.url,
-                status: {
-                  click: false,
-                  loading: 0
-                }
-              }}
-            />
+            <>
+              <div>{msg.sender.name}</div>
+              <MessageBox
+                key={idx}
+                position={"left"}
+                type={msg.type}
+                onClick={() => window.open(msg.data.url)}
+                text={msg.text}
+                data={{
+                  uri: msg.data.url,
+                  status: {
+                    click: false,
+                    loading: 0
+                  }
+                }}
+              />
+            </>
           ))}
         </div>
         <div className="send-messages-input">

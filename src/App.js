@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   fetchChatGroupConversations,
   initChat,
@@ -20,27 +20,32 @@ function App() {
   const [hasName, setHasName] = useState(readRecord("username") !== null);
   const [messages, setMessages] = useState([]);
 
+  const preparePastMessagesData = pastMessages => {
+    return pastMessages.map(msg => {
+      // Replace all properties 'type:image' with 'type: photo' as per react-chat-elements needs
+      if (msg.type && msg.type === "image") {
+        msg.type = "photo";
+      }
+
+      if (msg.data && msg.data.type && msg.data.type === "image") {
+        msg.data.type = "photo";
+      }
+
+      return msg;
+    });
+  };
+
   const handleLogin = username => {
     initChat()
       .then(
         loginChat(username)
           .then(data => {
+            
             storeToLocalStorage("username", username);
             setHasName(data.uid === username);
-            fetchChatGroupConversations().then(pastMessages => {
-              pastMessages = pastMessages.map(msg => {
-                // Replace all properties 'type:image' with 'type: photo' as per react-chat-elements needs
-                if (msg.type && msg.type === "image") {
-                  msg.type = "photo";
-                }
 
-                if (msg.data && msg.data.type && msg.data.type === "image") {
-                  msg.data.type = "photo";
-                }
-
-                return msg;
-              });
-              setMessages(pastMessages);
+            fetchChatGroupConversations().then(pastMessages => {            
+              setMessages(preparePastMessagesData(pastMessages));
             });
           })
           .catch(err => console.error("No connection to the Chat API", err))
@@ -66,6 +71,12 @@ function App() {
 
     setMessages([...groupConversations, ...[msg]]);
   };
+
+  useEffect(() => {
+    initChat().then(loginChat(readRecord('username')).then(() => {
+      fetchChatGroupConversations().then(conversationsData => setMessages(preparePastMessagesData(conversationsData)));
+    }));
+}, []);
 
   return (
     <>
