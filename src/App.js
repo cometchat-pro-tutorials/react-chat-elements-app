@@ -40,57 +40,68 @@ function App() {
       .then(
         loginChat(username)
           .then(data => {
-            
             storeToLocalStorage("username", username);
             setHasName(data.uid === username);
 
-            fetchChatGroupConversations().then(pastMessages => {            
+            fetchChatGroupConversations().then(pastMessages => {
               setMessages(preparePastMessagesData(pastMessages));
             });
           })
-          .catch(err => console.error("No connection to the Chat API", err))
+          .catch(err => {
+            console.log("No connection to the Chat API", err);
+            storeToLocalStorage("username", null);
+            setHasName(null);
+            return null;
+          })
       )
-      .catch(err => console.error("Initialization needed: ", err));
-  };
+      .catch(err => {
+        console.error("Initialization needed: ", err);
+      });
+};
 
-  const handleLogout = () => {
-    logoutChat();
-    clearAll();
-    setHasName(false);
-  };
+const handleLogout = () => {
+  logoutChat();
+  clearAll();
+  setHasName(false);
+};
 
-  const handleAddMessage = (groupConversations, msg) => {
-    // Replace the property 'type:image' with 'type: photo' of the current message as per react-chat-elements needs
-    if (msg.type && msg.type === "image") {
-      msg.type = "photo";
-    }
+const handleAddMessage = (groupConversations, msg) => {
+  // Replace the property 'type:image' with 'type: photo' of the current message as per react-chat-elements needs
+  if (msg.type && msg.type === "image") {
+    msg.type = "photo";
+  }
 
-    if (msg.data && msg.data.type && msg.data.type === "image") {
-      msg.data.type = "photo";
-    }
+  if (msg.data && msg.data.type && msg.data.type === "image") {
+    msg.data.type = "photo";
+  }
 
-    setMessages([...groupConversations, ...[msg]]);
-  };
+  setMessages([...groupConversations, ...[msg]]);
+};
 
-  useEffect(() => {
-    initChat().then(loginChat(readRecord('username')).then(() => {
-      fetchChatGroupConversations().then(conversationsData => setMessages(preparePastMessagesData(conversationsData)));
-    }));
+useEffect(() => {
+  initChat()
+    .then(loginChat(readRecord('username'))
+      .then(() => {
+        fetchChatGroupConversations()
+          .then(conversationsData => setMessages(preparePastMessagesData(conversationsData)))
+          .catch(e => console.log('Fetching failed', e));
+      }))
+    .catch(e => setHasName(null))
 }, []);
 
-  return (
-    <>
-      {hasName ? (
-        <ChatArea
-          logoutCallback={handleLogout}
-          addMessageCallback={handleAddMessage}
-          messages={messages}
-        />
-      ) : (
+return (
+  <>
+    {hasName ? (
+      <ChatArea
+        logoutCallback={handleLogout}
+        addMessageCallback={handleAddMessage}
+        messages={messages}
+      />
+    ) : (
         <Login callback={handleLogin} />
       )}
-    </>
-  );
+  </>
+);
 }
 
 export default App;
