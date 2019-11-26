@@ -11,7 +11,7 @@ export const readRecord = key => {
 
 // Update a record
 export const updateRecord = (key, value) => {
-  if (!key || !value) { return { error: 'Store to localStorage failed. Invalid key or value.' }; }
+  if (!key) { return { error: 'Store to localStorage failed. Invalid key or value.' }; }
   localStorage.setItem(key, value);
 };
 
