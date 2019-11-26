@@ -8,15 +8,14 @@ const Login = ({ callback }) => {
 
   const handleClick = e => {
     e.preventDefault();
-    if (
+    if ((
       username === "superhero1" ||
       username === "superhero2" ||
       username === "superhero3" ||
       username === "superhero4" ||
       username === "superhero5"
-    ) {
+    ) && callback(username)) {
       setHasError(false);
-      callback(username);
     } else {
       setHasError(true);
     }
