@@ -15,6 +15,7 @@ const Login = ({ callback }) => {
       username === "superhero4" ||
       username === "superhero5"
     ) && callback(username)) {
+      callback(username);
       setHasError(false);
     } else {
       setHasError(true);
