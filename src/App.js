@@ -46,16 +46,18 @@ function App() {
             fetchChatGroupConversations().then(pastMessages => {
               setMessages(preparePastMessagesData(pastMessages));
             });
+            return true;
           })
           .catch(err => {
             console.log("No connection to the Chat API", err);
             storeToLocalStorage("username", null);
-            setHasName(null);
-            return null;
+            setHasName(false);
+            return false;
           })
       )
       .catch(err => {
         console.error("Initialization needed: ", err);
+        return false;
       });
 };
 
@@ -84,9 +86,13 @@ useEffect(() => {
       .then(() => {
         fetchChatGroupConversations()
           .then(conversationsData => setMessages(preparePastMessagesData(conversationsData)))
-          .catch(e => console.log('Fetching failed', e));
-      }))
-    .catch(e => setHasName(null))
+          .catch(e => {
+            console.log('Fetching failed', e);
+            setHasName(false);
+          });
+      })
+      )
+    .catch(e => setHasName(false))
 }, []);
 
 return (
