@@ -137,6 +137,7 @@ export const fetchChatGroupConversations = () => {
     },
     error => {
       console.log("Message fetching failed with error: ", error);
+      return error;
     }
   );
 };

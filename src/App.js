@@ -21,18 +21,25 @@ function App() {
   const [messages, setMessages] = useState([]);
 
   const preparePastMessagesData = pastMessages => {
-    return pastMessages.map(msg => {
-      // Replace all properties 'type:image' with 'type: photo' as per react-chat-elements needs
-      if (msg.type && msg.type === "image") {
-        msg.type = "photo";
-      }
-
-      if (msg.data && msg.data.type && msg.data.type === "image") {
-        msg.data.type = "photo";
-      }
-
-      return msg;
-    });
+    if (Array.isArray(pastMessages)) {
+      return pastMessages.map(msg => {
+        // Replace all properties 'type:image' with 'type: photo' as per react-chat-elements needs
+        if (msg.type && msg.type === "image") {
+          msg.type = "photo";
+        }
+  
+        if (msg.data && msg.data.type && msg.data.type === "image") {
+          msg.data.type = "photo";
+        }
+  
+        return msg;
+      });
+    }
+    if (pastMessages.error && pastMessages.error.code === "USER_NOT_LOGED_IN") {
+      setHasName(false);
+    }
+    console.warn("No past messages fetched.");
+    return [];
   };
 
   const handleLogin = username => {
@@ -84,9 +91,14 @@ const handleAddMessage = (groupConversations, msg) => {
     initChat().then(loginChat(readRecord('username'))
       .then(() => {
         fetchChatGroupConversations()
-          .then(conversationsData => {
+        .then(conversationsData => {
             setMessages(preparePastMessagesData(conversationsData));
-          })
+        })
+        .catch(e => {
+          console.warn("Fetching chat conversation failed.", e);
+          
+
+        })
     }))
 }, []);
 

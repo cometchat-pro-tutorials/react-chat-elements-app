@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Login.css";
-import Logo from '../../images/cometchat-logo.svg'; 
+import Logo from "../../images/cometchat-logo.svg";
 
 const Login = ({ callback }) => {
   const [username, setUsername] = useState("");
@@ -8,13 +8,13 @@ const Login = ({ callback }) => {
 
   const handleClick = e => {
     e.preventDefault();
-    if ((
+    if (
       username === "superhero1" ||
       username === "superhero2" ||
       username === "superhero3" ||
       username === "superhero4" ||
       username === "superhero5"
-    ) && callback(username)) {
+    ) {
       callback(username);
       setHasError(false);
     } else {
@@ -33,8 +33,35 @@ const Login = ({ callback }) => {
                 usernames, e.g. "superhero1"
               </div>
             )}
-            <div><a href="https://www.cometchat.com/" target="_blank" rel="noreferrer noopener"><img src={Logo} alt="CometChat logo" /></a></div>
-            <label htmlFor="username">Welcome to our <a href="https://github.com/Detaysoft/react-chat-elements" target="_blank" rel="noreferrer noopener">react-chat-elements</a> chat demo powered by CometChat. Login with the username superhero1, superhero2 or superhero3 and test the chat out. To create your own user, see <a href="https://github.com/Detaysoft/react-chat-elements" target="_blank" rel="noreferrer noopener">our documentation.</a></label>
+            <div>
+              <a
+                href="https://www.cometchat.com/"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                <img src={Logo} alt="CometChat logo" />
+              </a>
+            </div>
+            <label htmlFor="username">
+              Welcome to our{" "}
+              <a
+                href="https://github.com/Detaysoft/react-chat-elements"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                react-chat-elements
+              </a>{" "}
+              chat demo powered by CometChat. Login with the username
+              superhero1, superhero2 or superhero3 and test the chat out. To
+              create your own user, see{" "}
+              <a
+                href="https://github.com/Detaysoft/react-chat-elements"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                our documentation.
+              </a>
+            </label>
           </div>
           <input
             name="username"
