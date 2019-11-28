@@ -7,9 +7,11 @@ import { MEDIA_MSG, TEXT_MSG } from "../../utils/consts";
 import "react-chat-elements/dist/main.css";
 import "./ChatArea.css";
 import User from "../User/User";
+import { scrollToBottom } from './../../utils/helpers';
 
 function ChatArea({ logoutCallback, addMessageCallback, messages }) {
   const inputRef = useRef("");
+  const messagesAreaRef = useRef();
   const [message, setMessage] = useState("");
   const [updatedMessages, setUpdatedMessages] = useState([]);
 
@@ -36,6 +38,12 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
 
     sendChatMessage(messageToBeSent).then(msg => {
       addMessageCallback(updatedMessages, msg);
+      const messagesArea = messagesAreaRef.current;
+      const shouldScroll = messagesArea.scrollTop + messagesArea.clientHeight !== messagesArea.scrollHeight;
+
+            if (shouldScroll) {
+                scrollToBottom(messagesArea);
+            }
 
       clearTextInput();
     });
@@ -56,9 +64,9 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
             text="X"
           />
         </div>
-        <div className="messages-list">
+        <div className="messages-list" ref={messagesAreaRef}>
           {updatedMessages.map((msg, idx) => (
-            <div className="message" key={msg.id}>
+            <div className="message" key={idx}>
               <User userData={msg.sender} />
               <MessageBox
                 key={idx}

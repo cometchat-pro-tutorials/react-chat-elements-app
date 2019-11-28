@@ -80,21 +80,14 @@ const handleAddMessage = (groupConversations, msg) => {
   setMessages([...groupConversations, ...[msg]]);
 };
 
-useEffect(() => {
-  initChat()
-    .then(loginChat(readRecord('username'))
+  useEffect(() => {
+    initChat().then(loginChat(readRecord('username'))
       .then(() => {
         fetchChatGroupConversations()
-          .then(conversationsData => setMessages(preparePastMessagesData(conversationsData)))
-          .catch(e => {
-            console.log('Fetching failed', e);
-            setHasName(false);
-          });
-      })
-      ).catch(e => {
-        setHasName(false);
-        return false;
-      })
+          .then(conversationsData => {
+            setMessages(preparePastMessagesData(conversationsData));
+          })
+    }))
 }, []);
 
 return (

@@ -6,7 +6,7 @@ export const createRecord = (key, value) => {
 
 // Read a record
 export const readRecord = key => {
-  return localStorage.getItem(key);
+  return localStorage.getItem(key) || '';
 };
 
 // Update a record
