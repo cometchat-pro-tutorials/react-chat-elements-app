@@ -69,7 +69,7 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
           {updatedMessages.map((msg, idx) => {
             const isSender = msg.sender.uid === readRecord('username');
             return (
-              <div className="message" key={idx}>
+              <div className={isSender ? " message left" : "message right"} key={idx}>
                 {isSender && <User userData={msg.sender} />}
                 <MessageBox
                   key={idx}
