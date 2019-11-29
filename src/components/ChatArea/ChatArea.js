@@ -8,6 +8,7 @@ import "react-chat-elements/dist/main.css";
 import "./ChatArea.css";
 import User from "../User/User";
 import { scrollToBottom } from './../../utils/helpers';
+import { readRecord } from "../../utils/localStorageService";
 
 function ChatArea({ logoutCallback, addMessageCallback, messages }) {
   const inputRef = useRef("");
@@ -64,26 +65,30 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
             text="X"
           />
         </div>
-        <div className="messages-list" ref={messagesAreaRef}>
-          {updatedMessages.map((msg, idx) => (
-            <div className="message" key={idx}>
-              <User userData={msg.sender} />
-              <MessageBox
-                key={idx}
-                position={"left"}
-                type={msg.type}
-                onClick={() => window.open(msg.data.url)}
-                text={msg.text}
-                data={{
-                  uri: msg.data.url,
-                  status: {
-                    click: false,
-                    loading: 0
-                  }
-                }}
-              />
-            </div>
-          ))}
+        <div className="messages-list" ref={messagesAreaRef}>        
+          {updatedMessages.map((msg, idx) => {
+            const isSender = msg.sender.uid === readRecord('username');
+            return (
+              <div className="message" key={idx}>
+                {isSender && <User userData={msg.sender} />}
+                <MessageBox
+                  key={idx}
+                  position={isSender ? "left" : "right"}
+                  type={msg.type}
+                  onClick={() => window.open(msg.data.url)}
+                  text={msg.text}
+                  data={{
+                    uri: msg.data.url,
+                    status: {
+                      click: false,
+                      loading: 0
+                    }
+                  }}
+                />
+                {!isSender && <User userData={msg.sender} />}
+              </div>
+            )
+          })}
         </div>
         <div className="send-messages-input">
           <Input
