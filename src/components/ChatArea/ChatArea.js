@@ -27,6 +27,7 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
 
   useEffect(() => {
     setUpdatedMessages(messages);
+    scrollToBottom(messagesAreaRef.current);
   }, [messages]);
 
   const clearTextInput = () => {
@@ -65,7 +66,7 @@ function ChatArea({ logoutCallback, addMessageCallback, messages }) {
             text="X"
           />
         </div>
-        <div className="messages-list" ref={messagesAreaRef}>        
+        <div className="messages-list" ref={messagesAreaRef}>
           {updatedMessages.map((msg, idx) => {
             const isSender = msg.sender.uid === readRecord('username');
             return (
