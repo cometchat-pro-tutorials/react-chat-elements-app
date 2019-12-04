@@ -9,8 +9,7 @@ Read the full tutorial here:
 This example shows how to build a chat app with React and react-chat-elements:
 
 ### Screenshots
-![screenshot](https://github.com/mihailgaberov/react-chat-elements-app/blob/master/screenshots/chat-elements-login.png)
-![screenshot](https://github.com/mihailgaberov/react-chat-elements-app/blob/master/screenshots/chat-elements-screen.png)
+![screenshot](https://github.com/mihailgaberov/react-chat-elements-app/blob/master/screenshots/react-chat-elements.gif)
 
 ## Technology
 This demo uses:
