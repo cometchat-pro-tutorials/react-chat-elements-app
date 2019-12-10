@@ -32,6 +32,7 @@ To run the demo follow these steps:
 ```
     REACT_APP_ID=your app ID
     REACT_APP_API_KEY=your key
+    REACT_APP_REGION=your region (e.g. 'eu' or 'us')
 ```
 8. Install the project dependencies via: `npm i`
 9. Run the app via: `npm start`
