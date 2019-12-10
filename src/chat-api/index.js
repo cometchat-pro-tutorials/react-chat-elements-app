@@ -6,18 +6,22 @@ require("dotenv").config();
 
 const appID = process.env.REACT_APP_ID;
 const apiKey = process.env.REACT_APP_API_KEY;
+const region = process.env.REACT_APP_REGION;
+const cometChatSettings = new CometChat.AppSettingsBuilder().subscribePresenceForAllUsers().setRegion(region).build();
 
 export const initChat = () => {
-  return CometChat.init(appID).then(
-    () => {
-      console.log("Initialization completed successfully");
-      // You can now call login function.
-    },
-    error => {
-      console.log("Initialization failed with error:", error);
-      // Check the reason for error and take appropriate action.
-    }
-  );
+  return CometChat.init(appID, cometChatSettings)
+    .then(
+      () => {
+        console.log("Initialization completed successfully");
+        //You can now call login function.
+      },
+      error => {
+        console.log("Initialization failed with error:", error);
+        //Check the reason for error and take appropriate action.
+      }
+    );
+
 };
 
 export const loginChat = username => {
