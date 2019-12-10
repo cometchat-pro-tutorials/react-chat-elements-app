@@ -23,10 +23,10 @@ This demo uses:
 To run the demo follow these steps:
 
 1. [Head to CometChat Pro and create an account](https://cometchat.com/pro?utm_source=github&utm_medium=example-code-readme)
-2. From the [dashboard](https://app.cometchat.com/?utm_source=github&utm_medium=example-code-readme), create a new v2 app called "react-chat-elements-app"
+2. From the [dashboard](https://app.cometchat.com/?utm_source=github&utm_medium=example-code-readme), create a new v2 app called "react-chat-elements"
 3. Once created, click **Explore**
-4. Go to the **API Keys** tab and click **Create API Key**
-5. Create an API key called "react-chat-elements-app" with **Full Access**
+4. Go to the **API Keys** tab
+5. Copy the API key called "react-chat-elements" with **Full Access**
 6. Download the repository [here](https://github.com/mihailgaberov/react-chat-elements-app/archive/master.zip) or by running `git clone https://github.com/mihailgaberov/react-chat-elements-app.git` and open it in your favorite IDE.
 7. Create a .env file in the project directory with your newly-created credentials, such as:
 ```
