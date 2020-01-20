@@ -2,7 +2,7 @@
 
 Read the full tutorial here:
 
-[**>> How to make CometChat work with react-chat-elements**](https://www.cometchat.com/tutorials/react-chat-elements-tutorial/?utm_**source**=github&utm_medium=example-code-readme)
+[**>> How to make CometChat work with react-chat-elements**](https://www.cometchat.com/tutorials/cometchat-react-chat-elements/?utm_**source**=github&utm_medium=example-code-readme)
 
 [**>> Live Demo Here**](https://practical-engelbart-23d396.netlify.com/)
 
